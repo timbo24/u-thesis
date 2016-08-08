@@ -5,39 +5,35 @@
           scriblib/footnote
           scribble/manual)
 
-@title{Professor J}
+@title{ProfessorJ}
 
-Professor J is a tool developed by former University of Utah Phd student Kathryn Gray[3]
+ProfessorJ is a tool developed by former University of Utah Phd student Kathryn Gray
 for teaching Java programming to students. It allows teachers to introduce language features
 and concepts progressively by splitting Java into various various language levels.
 It includes a Java to Racket compiler with partial support for Java 1.1.
 The structure of the compiler is a yacc style lexer and parser which produces an abstract
-syntax tree (AST) consisting of mutable structs. The mutable option allowing
-each struct's state to be modified with the @tt{set!} operator. This AST is
+syntax tree (AST) consisting of mutable structs. This AST is
 first type checked and then the compiler translates each part into a corresponding
-racket form, taking advantage of racket’s @tt{racket/class} package.
+Racket form, taking advantage of racket’s @tt{racket/class} package.
 
 The compiler is the main focus, and especially the efforts to go from Java 1.1 to Java 7.
-@secref{sub:java} covers this part, and the challenges that occured as well as discussing
+@Secref{sub:java} covers this part, and the challenges that occured as well as discussing
 what still needs to be done. Next, @secref{sub:structure} will discuss some additional changes
 around the code that would help and make the code easier to maintain, and benefit
-Professor J as a tool to be used by others and to support additional changes in the future.
+ProfessorJ as a tool to be used by others and to support additional changes in the future.
 
 @section[#:tag "sub:java"]{Improving Java support}
 
-Professor J was developed with support up to Java 1.1. The documentation
-shows that some language some language features were not completed.
-The Spoofax tools were developed using Java 7, so effort was taken to
-expand both Professor J's and Racket's support for Java by adding both
-the missing features from Java 1 and 1.1 as well as all up to 7. A summary
-is shown in @figure-ref{fig:java-evol}. There are a lot of changes, but
-not all were major so prioritization went to the biggest. The focus was on static
+ProfessorJ was developed with support up to Java 1.1. The documentation
+shows that some language some features were not completed initially.
+@Figure-ref{fig:java-evol} shows a summary of all syntax updates to the language.
+There are many changes, but only a few were significant alterations. The focus was on static
 nested classes, generics (Java's version of parametric polymorphism), and 
 autoboxing/unboxing conversions between primitives and their corresponding Object types.
 @figure-here[#:style left-figure-style
              "fig:java-evol"
              "Java language evolution"]{
- @bold{@larger{Java 1/1.1 (Not implemented in Professor J)}}
+ @bold{@larger{Java 1/1.1 (Not implemented in ProfessorJ)}}
  @itemlist[@item{static nested classes}
            @item{switch}
            @item{labeled statements (compiles but does not work correctly)}
@@ -79,7 +75,7 @@ an example of a generic class in Java.
 This is the largest change to the syntax of the language, and modifications first go
 to the lexer and parser where the matching angle bracket form is handled and type
 variables are stored. This must be done in the build-info phase of compilation,
-where Professor J resolves imports. Without replacing type parameters the compiler will
+where ProfessorJ resolves imports. Without replacing type parameters the compiler will
 be looking out in the package structure to import it, which will cause errors.
 So if the class saved type parameters it simply does a search of all members and
 replaces all instances of the type parameter with an Object type. This
@@ -91,12 +87,11 @@ This requires modifying the AST within the type-checker.
 
 This was the extent of progress made to add new features in terms of Java support. There
 are however other additions to the tool that would benefit other developers and
-make using it easier to update.
+make it easier to update.
 
 @section[#:tag "sub:structure"]{Further work and considerations}
 
-There are ways to improve Professor J without just adding new language constructs.
-These are more fundamental, more with how the code is organized and layed out. Ways that
+There are ways to improve ProfessorJ beyond adding new language constructs. Ways that
 make it easier to reason about some of the code, and make working with it more explicit.
 The plan is to add these features in the future and eventually merge back with the main
 github repository at @url{https://github.com/mflatt/profj}.
@@ -114,7 +109,7 @@ Functional programming has an emphasis on preserving state. This
 philiosophy has its justifications. It can make functions clearer, so that
 the main focus of computation within a function is on what value is returned.
 It also makes changes to values to be more explicit again, adding to clarity.
-For the most part Professor J is done functionally aside from its mutable AST.
+For the most part ProfessorJ is done functionally aside from its mutable AST.
 It might therefore be worth it to modify the code to do this. It would
 involve threading it through across phases of the compiler. 
 
