@@ -80,7 +80,7 @@ shows the use of @tt{parse} to produce either a parse tree or parse forest.
 @figure-here["fig:jsglr-standalone" "Example standalone JSGLR use" ]{
  @(scale (bitmap "jsglr-standalone.png") .25)}
 
-@section[#:tag "sub:sdf-sglr"]{@tt{#lang sdf}}
+@section[#:tag "sub:#lang"]{@tt{#lang sdf}}
 
 "describe signifacants of #lang"
 With @tt{#lang} Racket provides a powerful way to incorporate new languages into
@@ -88,14 +88,48 @@ its ecosystem. Developers can simply type @tt{#lang language-of-choice} at the t
 of a window in Dr Racket and if the package exists, they can simply begin writing
 in the syntax of that language. It can be used to integrate something like the SDF
 meta-language into racket was well. Once complete users can write in the exact syntax as
-@fig-ref{fig:sdf-example} except with @tt{#lang sdf} prepended.
+@figure-ref{fig:sdf-example} except with @tt{#lang sdf} prepended.
 
 Once both tools are translated, a @tt{#lang} can be created by defining the reader
 that is called once racket sees @tt{#lang sdf}. It will then use this to interpret
 the syntax of the definitions window and usually what happens is that it produces
 a syntax-object which will either continue to be processed, or will be compiled
 with Racket. Instead, what the SDF grammar definition should do is produce a parse
-table file. From @fig-ref
+table file just like in @figure-ref{fig:sdf-standalone}.
 
-@figure-here["fig:sdf-example" "Example SDF grammar" ]{
- @(scale (bitmap "sdf-example.png") .25)}
+Now, this can go even further. For example, any language included in Racket goes through
+the same process, where a reader is called which then takes the syntax of the
+definitions window and passes it to a reader. @Figure-ref{fig:example-reader} shows
+how, once compiled to racket, the sglr could be used like a package and the parser
+could take a parse table and call to the sglr parse function.
+
+
+@figure-here["fig:example-reader" "Example reader incorporation parsing tool" ]{
+                                                                                
+ @codeblock|{
+  #lang racket
+
+  (module reader syntax/module-reader
+    example-language
+    #:read-syntax
+    (λ (name in)
+      (read-syntax name in))
+  
+    #:read
+    (λ (in)
+      (map syntax->datum (read-syntax 'prog in)))
+  
+    #:whole-body-readers?
+    #t
+    
+    (require sglr)
+
+    (let* [(ptm (new parse-table-manager%))
+           (sglr (instantiate sglr% (list (send ptm get-factory)
+                                          (send ptm
+                                                load-from-file
+                                                "path/to/parse-table.tbl"))))]
+  
+      (define (read-syntax name in) (send sglr parse (port->string in) name 'program))))
+ }|
+}
