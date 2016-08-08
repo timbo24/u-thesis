@@ -10,7 +10,10 @@
           tool, the goal of continuing and eventually merging work back with that
           master branch, as well as an application in terms of translating a parsing tool
           from Java into Racket.}
+
 @include-section{intro.scrbl}
 @include-section{profj.scrbl}
 @include-section{sdf-sglr.scrbl}
-@include-section{conclusions}
+@include-section{conclusion.scrbl}
+
+@;@(generate-bibliography)

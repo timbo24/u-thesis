@@ -12,8 +12,7 @@ yacc style lexing and parsing tools have their limitations and adding one that
 could accept all context free grammars, simplify grammar definitions, and most
 importantly provide robust error recovery and reporting would benefit Racket. Not only that
 but adding a tool like this would also make future integration of languages, and other tools,
-much easier as well. The plan is to use the expanded Java support to translate the tool
-as is and integrate it into DrRacket via @tt{#lang sdf}.  
+much easier as well. 
 
 The Spoofax Language Workbench offers a combination Syntax Definition Formalism (SDF)
 and Scannerless Generalized LR Parser (SGLR) that resolve the issues raised by Racket's current
@@ -29,18 +28,13 @@ it allows illformed programs to be parsed while still providing useful informati
 about the wellformed portions. This is especially useful for parsing in an interactive
 environment such as an IDE, where code updates often do result in illformed programs.
 Both of these tools are implemented using Java as part of an Eclipse IDE plugin,
-@figure-here["fig:sdf-example" "Example SDF grammar" ]{
- @(scale (bitmap "sdf-example.png") .25)}
 so bringing them natively to Racket is an issue.
 
-@;TODO add reference to permissive grammars research paper
+@figure-here["fig:sdf-example" "Example SDF grammar" ]{
+ @(scale (bitmap "sdf-example.png") .25)}
 
-The goal would then be to define a package and use @tt{#lang sdf} to allow developers
-to seamlessly write grammars like @figure-ref{fig:sdf-example} directly in DrRacket,
-using it to add even more support for new and existing languages. Another important goal
-for this project is to improve the ProfessorJ learning tool, and specifically the compiler.
-Adding not only new Java support but other changes to make it easier to extend and work on
-and merging those changes back with the git repo.
+The plan is to use the expanded Java support to translate the tool as is
+and integrate it into DrRacket via @tt{#lang sdf}.  
 
 @section[#:tag "sub:sdf-sglr"]{Structure of Parsing Tool}
 
@@ -83,7 +77,6 @@ shows the use of @tt{parse} to produce either a parse tree or parse forest.
 
 @section[#:tag "sub:#lang"]{@tt{#lang sdf}}
 
-"describe signifacants of #lang"
 With @tt{#lang} Racket provides a powerful way to incorporate new languages into
 its ecosystem. Developers can simply type @tt{#lang language-of-choice} at the top
 of a window in DrRacket and if the package exists, they can simply begin writing
@@ -91,7 +84,7 @@ in the syntax of that language. It can be used to integrate something like the S
 meta-language into racket was well. Once complete users can write in the exact syntax as
 @figure-ref{fig:sdf-example} except with @tt{#lang sdf} prepended.
 
-Once both tools are translated, a @tt{#lang} can be created by defining the reader
+Once both tools are translated, they can be intergrated by defining the reader
 that is called once racket sees @tt{#lang sdf}. It will then use this to interpret
 the syntax of the definitions window and usually what happens is that it produces
 a syntax-object which will either continue to be processed, or will be compiled
@@ -100,9 +93,9 @@ table file just like in @figure-ref{fig:sdf-standalone}.
 
 Now, this can go even further. For example, any language included in Racket goes through
 the same process, where a reader is called which then takes the syntax of the
-definitions window and passes it to a reader. @Figure-ref{fig:example-reader} shows
-how, once compiled to racket, the sglr could be used like a package and the parser
-could take a parse table and call to the sglr parse function.
+definitions window and passes it to a reader. Therefore once a grammar is defined, a parser
+can be generated and used from within the reader definition. @Figure-ref{fig:example-reader} shows
+how an example of how this would look.
 
 
 @figure-here["fig:example-reader" "Example reader incorporation parsing tool" ]{

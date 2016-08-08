@@ -26,15 +26,17 @@ ProfessorJ as a tool to be used by others and to support additional changes in t
 
 ProfessorJ was developed with support up to Java 1.1. The documentation
 shows that some language some features were not completed initially.
-@Figure-ref{fig:java-evol} shows a summary of all syntax updates to the language.
 There are many changes, but only a few were significant alterations. The focus was on static
 nested classes, generics (Java's version of parametric polymorphism), and 
 autoboxing/unboxing conversions between primitives and their corresponding Object types.
+@Figure-ref{fig:java-evol} shows a summary of all syntax updates to the language with work
+being on the bold items.
+
 @figure-here[#:style left-figure-style
              "fig:java-evol"
              "Java language evolution"]{
  @bold{@larger{Java 1/1.1 (Not implemented in ProfessorJ)}}
- @itemlist[@item{static nested classes}
+ @itemlist[@item{@bold{static nested classes}}
            @item{switch}
            @item{labeled statements (compiles but does not work correctly)}
            @item{reflection}
@@ -45,8 +47,8 @@ autoboxing/unboxing conversions between primitives and their corresponding Objec
  @bold{@larger{Java 4}}
  @itemlist[@item{@tt{assert} keyword}]
  @bold{@larger{Java 5}}
- @itemlist[@item{generics}
-           @item{autoboxing/unboxing}
+ @itemlist[@item{@bold{generics}}
+           @item{@bold{autoboxing/unboxing}}
            @item{enumerations: use of @tt{enum} keyword to create typesafe, ordered list of values}
            @item{varargs: last parameter of a method can be followed by ellipses, any number of parameters of the type can be used and placed inside of an array and passed to the method}
            @item{for each}
@@ -57,10 +59,10 @@ autoboxing/unboxing conversions between primitives and their corresponding Objec
            @item{simplification of varargs}
            @item{underscores allowed in numeric literals}]}
 
-Nested classes can be handled as is by simply reusing code and
-allowing classes to be members like methods and fields. Inner classes are handled
-but not parsed correctly, so additional changes to the parser were required in
-order to make sure that these were also handled correctly. 
+Since Racket supports nested classes within Objects the translation is straight
+forward. Static nested classes are the same as other inner classes, except that
+they cannot interact with other members of the enclosing class. So they
+require additional restrictions to ensure this behavior.
 
 The motivation for the addition of generics, like typing in general, is
 to catch errors early and make development more declarative and readable.
