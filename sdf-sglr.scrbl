@@ -2,7 +2,8 @@
 
 @(require scribble/manual
           (only-in pict bitmap scale)
-          scriblib/figure scriblib/footnote)
+          scriblib/figure scriblib/footnote
+          "bib.rkt")
 
 @title{SDF + SGLR}
 
@@ -26,12 +27,13 @@ using the SDF syntax is shown in @figure-ref{fig:sdf-example}. Extensive
 work has gone into the error recovery and error reporting features of SGLR,
 it allows illformed programs to be parsed while still providing useful information
 about the wellformed portions. This is especially useful for parsing in an interactive
-environment such as an IDE, where code updates often do result in illformed programs.
+environment such as an IDE, where code updates often do result in illformed programs @~cite[natural-flex-error-recovery].
 Both of these tools are implemented using Java as part of an Eclipse IDE plugin,
 so bringing them natively to Racket is an issue.
 
-@figure-here["fig:sdf-example" "Example SDF grammar" ]{
- @(scale (bitmap "sdf-example.png") .25)}
+@figure-here["fig:sdf-example" "Example SDF grammar"]{
+ @(scale (bitmap "sdf-example.png") .25)
+ @~cite[sdf]}
 
 The plan is to use the expanded Java support to translate the tool as is
 and integrate it into DrRacket via @tt{#lang sdf}.  
@@ -52,6 +54,8 @@ the tools and they can be kept modular as in @figure-ref{fig:parsing-tool-struct
 The Spoofax team provides a commandline tool
 that takes in SDF grammar definition modules concatenated into a single file with the
 form:
+
+
 @codeblock|{
 definition
    <Module>+

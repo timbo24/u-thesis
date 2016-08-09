@@ -1,5 +1,7 @@
 #lang scribble/sigplan @10pt
 
+@(require "bib.rkt")
+
 @title{Improving Java Support in Racket}
 
 @authorinfo["Tim Knutson" "University of Utah" "u0851247@utah.edu"]
@@ -17,4 +19,4 @@
 @include-section{lwc2016.scrbl}
 @include-section{conclusion.scrbl}
 
-@;@(generate-bibliography)
+@(generate-bibliography)

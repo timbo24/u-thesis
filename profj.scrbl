@@ -3,12 +3,13 @@
 @(require (only-in pict bitmap scale)
           scriblib/figure
           scriblib/footnote
-          scribble/manual)
+          scribble/manual
+          "bib.rkt")
 
 @title{ProfessorJ}
 
 ProfessorJ is a tool developed by former University of Utah Phd student Kathryn Gray
-for teaching Java programming to students. It allows teachers to introduce language features
+for teaching Java programming to students@~cite[profj]. It allows teachers to introduce language features
 and concepts progressively by splitting Java into various various language levels.
 It includes a Java to Racket compiler with partial support for Java 1.1.
 The structure of the compiler is a yacc style lexer and parser which produces an abstract
@@ -30,7 +31,7 @@ There are many changes, but only a few were significant alterations. The focus w
 nested classes, generics (Java's version of parametric polymorphism), and 
 autoboxing/unboxing conversions between primitives and their corresponding Object types.
 @Figure-ref{fig:java-evol} shows a summary of all syntax updates to the language with work
-being on the bold items.
+being done on the bold items.
 
 @figure-here[#:style left-figure-style
              "fig:java-evol"

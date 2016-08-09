@@ -2,17 +2,17 @@
 
 @(require scribble/manual
           (only-in pict bitmap scale)
-          scriblib/figure scriblib/footnote)
+          scriblib/figure scriblib/footnote
+          "bib.rkt")
 
 @title{2016 Language Workbench Challenge}
 
 The Language Workbench Challenge is an opportunity for various  language
 development communities to show off their perspectives and tools.
-
 Racket's focus is on its powerful language transformation properties as
 well as the ability, discussed in @secref{sub:#lang}, to seamlessly incorporate
-languages ontop of core Racket.
-The challenge included implementing a subset of Java called MiniJava
+languages ontop of core Racket@~cite[lwc2016].
+The challenge included implementing a subset of Java called MiniJava @~cite[mini-java]
 and then showing how to implement additional features on top of the
 core language. The solution features these various transformations that Racket can
 incorporate in order to compile MiniJava down to base to Racket. The @tt{#lang}
