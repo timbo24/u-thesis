@@ -14,6 +14,7 @@
 @include-section{intro.scrbl}
 @include-section{profj.scrbl}
 @include-section{sdf-sglr.scrbl}
+@include-section{lwc2016.scrbl}
 @include-section{conclusion.scrbl}
 
 @;@(generate-bibliography)

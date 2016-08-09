@@ -86,44 +86,9 @@ meta-language into racket was well. Once complete users can write in the exact s
 
 Once both tools are translated, they can be intergrated by defining the reader
 that is called once racket sees @tt{#lang sdf}. It will then use this to interpret
-the syntax of the definitions window and usually what happens is that it produces
-a syntax-object which will either continue to be processed, or will be compiled
-with Racket. Instead, what the SDF grammar definition should do is produce a parse
-table file just like in @figure-ref{fig:sdf-standalone}.
+the syntax of the definitions window and generate a syntax object. In the case of a
+@tt{#lang sdf} file, the generated syntax object can export an sdf generated
+parse table which can then be imported by other modules when parsing. So
+instead of what happens in @figure-ref{fig:sdf-standalone} where it saves a file
+it can just provide the @tt{pt} variable on line 25.
 
-Now, this can go even further. For example, any language included in Racket goes through
-the same process, where a reader is called which then takes the syntax of the
-definitions window and passes it to a reader. Therefore once a grammar is defined, a parser
-can be generated and used from within the reader definition. @Figure-ref{fig:example-reader} shows
-how an example of how this would look.
-
-
-@figure-here["fig:example-reader" "Example reader incorporation parsing tool" ]{
-                                                                                
- @codeblock|{
-  #lang racket
-
-  (module reader syntax/module-reader
-    example-language
-    #:read-syntax
-    (λ (name in)
-      (read-syntax name in))
-  
-    #:read
-    (λ (in)
-      (map syntax->datum (read-syntax 'prog in)))
-  
-    #:whole-body-readers?
-    #t
-    
-    (require sglr)
-
-    (let* [(ptm (new parse-table-manager%))
-           (sglr (instantiate sglr% (list (send ptm get-factory)
-                                          (send ptm
-                                                load-from-file
-                                                "path/to/parse-table.tbl"))))]
-  
-      (define (read-syntax name in) (send sglr parse (port->string in) name 'program))))
- }|
-}

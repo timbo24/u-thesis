@@ -15,3 +15,5 @@ can make creating and supporting new languages even easier. This document will
 cover efforts to improve Racket support for the Java programming language
 in the form of the ProfessorJ learning tool. It will also go over progress made
 towards using this support to integrate a powerful parsing tool into DrRacket.
+Finally, it will discuss how a tool like this can then be used to add support
+for even more languages. 
