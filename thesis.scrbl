@@ -4,7 +4,8 @@
 
 @title{Improving Java Support in Racket}
 
-@authorinfo["Tim Knutson" "University of Utah" "u0851247@utah.edu"]
+@authorinfo["Tim Knutson"          "University of Utah"      "u0851247@utah.edu"]
+@authorinfo["Matthew Flatt"        "University of Utah"      "mflatt@cs.utah.edu"]
 
 @abstract{Racket thrives on building an ecosystem full of other languages and the
           tools to develop and integrate those languages. This paper discusses
