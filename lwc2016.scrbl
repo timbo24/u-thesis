@@ -29,12 +29,9 @@ This involves defining a reader that uses the parse
 function provided by the yacc parser. @Figure-ref{fig:example-reader} shows how
 to incorporate the SDF tool instead, once a sdf definition is written using the ProfessorJ
 translated tool, it can be imported by the reader for mini-java.
-The grammar definition is imported on
-line 16 providing the parse-table it generates for use on line 22.  Both
-parse-table-manager% and sglr% classes result from translating the SGLR tool into
-Racket using ProfessorJ, this allows the read-syntax definition to incorporate
-the SGLR parse function.
-
+The grammar definition is imported on line 16 providing the parse-table
+it generates for use on line 22.  Both parse-table-manager% and sglr%
+classes result from translating the SGLR tool into
 @figure*["fig:example-reader" "Example reader incorporation parsing tool" ]{                                                                              
  @codeblock[#:line-numbers 1]|{
               #lang racket
@@ -56,14 +53,15 @@ the SGLR parse function.
                          sglr)
 
                 (let* [(ptm (new parse-table-manager%))
-                       (sglr (instantiate sglr%
-                                          (list (send ptm get-factory)
-                                                parse-table)))]
+                       (sglr (instantiate sglr% (list (send ptm get-factory)
+                                                      parse-table)))]
   
                   (define (read-syntax name in)
                     (send sglr parse (port->string in) name 'program))))
               }|
  }
+Racket using ProfessorJ, this allows the read-syntax definition to incorporate
+the SGLR parse function.
 
 Now, that provides the ability to define a @tt{#lang mini-java} file
 and it will automatically connect the SGLR parser. 
